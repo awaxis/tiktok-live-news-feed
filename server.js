@@ -29,11 +29,11 @@ const requireApiKey = (req, res, next) => {
 };
 
 const broadcastMessages = () => {
-    io.emit("message-update", { text: messages.join(" • ") });
+    io.emit("message-update", { text: messages.join(process.env.MESSAGE_SEPARATOR || " • ") });
 };
 
 io.on("connection", (socket) => {
-    socket.emit("message-update", { text: messages.join(" • ") });
+    socket.emit("message-update", { text: messages.join(process.env.MESSAGE_SEPARATOR || " • ") });
 });
 
 app.post("/update", requireApiKey, (req, res) => {
