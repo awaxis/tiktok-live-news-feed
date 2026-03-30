@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        #ticker {
+            position: absolute;
+            left: 0;
+            bottom: 20px;
+            white-space: nowrap;
+            font-size: 40px;
+            font-family: Arial;
+            color: white;
+            animation: scroll 15s linear infinite;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(100vw);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="ticker">Chargement...</div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on("message-update", (data) => {
+            const el = document.getElementById("ticker");
+
+            if (el.innerText !== data.text) {
+                //el.style.animation = "none";
+                //el.offsetHeight; // reset animation
+
+                el.innerText = data.text;
+                //el.style.animation = "scroll 15s linear infinite";
+            }
+        });
+    </script>
+
+</body>
+
+</html>
