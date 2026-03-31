@@ -15,19 +15,19 @@
             left: 0;
             bottom: 20px;
             white-space: nowrap;
-            font-size: 40px;
+            font-size: 60px;
             font-family: Arial;
             color: white;
-            animation: scroll 15s linear infinite;
+            animation: scroll 45s linear infinite;
         }
 
         @keyframes scroll {
             from {
-                transform: translateX(100vw);
+                transform: translateX(-100%);
             }
 
             to {
-                transform: translateX(-100%);
+                transform: translateX(100vw);
             }
         }
     </style>
@@ -44,12 +44,18 @@
             const el = document.getElementById("ticker");
 
             if (el.innerText !== data.text) {
-                //el.style.animation = "none";
-                //el.offsetHeight; // reset animation
-
                 el.innerText = data.text;
-                //el.style.animation = "scroll 15s linear infinite";
             }
+        });
+
+        socket.on("config-update", (config) => {
+            const el = document.getElementById("ticker");
+            if (config.speed) el.style.animationDuration = `${config.speed}s`;
+            if (config.fontSize) el.style.fontSize = `${config.fontSize}px`;
+            if (config.color) el.style.color = config.color;
+            if (config.fontFamily) el.style.fontFamily = config.fontFamily;
+            if (config.backgroundColor !== undefined) document.body.style.backgroundColor = config.backgroundColor;
+            if (config.textShadow !== undefined) el.style.textShadow = config.textShadow;
         });
     </script>
 

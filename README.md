@@ -145,10 +145,29 @@ To manage messages manually via code, command line, or your own control panel, y
 ### 4. Dynamic Limits
 - **`PUT /limit`**
   Change the total number of messages your ticker will hold. If you shrink the limit below your current message count, the oldest messages are truncated instantly.
-  **cURL Example:**
   ```bash
   curl -X PUT http://localhost:3080/limit \
        -H "Content-Type: application/json" \
        -H "x-api-key: my-secret-key-1" \
        -d '{"limit": 5}'
+  ```
+
+### 5. Dynamic Overlay Configuration (Styling)
+- **`GET /config`**
+  Returns the current styling configuration for the overlay (speed, font, colors, etc.). *(No API key required)*
+
+- **`PUT /config`**
+  Instantly update the ticker's visual style. Broadcasts changes immediately to all connected OBS / frontend clients without reloading the source!
+  **cURL Example:**
+  ```bash
+  curl -X PUT http://localhost:3080/config \
+       -H "Content-Type: application/json" \
+       -H "x-api-key: my-secret-key-1" \
+       -d '{
+            "speed": 10,
+            "fontSize": 70,
+            "color": "#00ff00",
+            "backgroundColor": "#111111",
+            "textShadow": "0px 0px 10px rgba(255, 0, 0, 1)"
+           }'
   ```
